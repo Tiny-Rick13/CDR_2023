@@ -11,14 +11,14 @@
 int BAUD_RATE 115200;
 #define DATA_BITS 8 // taille constante de la trame
 #define START_BITS 1 // bit alloué pour informer du début de la trame
-#define PARITY    UART_PARITY_NONE
+#define PARITY    UART_PARITY_NONE // jsp à quoi ça sert mais bon
 int UART_TX_PIN 6;
 int UART_RX_PIN 7;
 
 stdio_uart_init_full(UART_ID *uart, int BAUD_RATE, UART_TX_PIN, UART_RX_PIN);
 
 char buffer_reception[8]; //byte de taille 8 : jusqu'à 255
-uart_init(UART_ID, BAUD_RATE); // je comprends pas la ptn d'erreur
+// uart_init(UART_ID, BAUD_RATE); // je comprends pas l'erreur
 
 int main() {
 
@@ -29,7 +29,7 @@ int main() {
     while(1) {
         
 
-        if(uart_is_readable(UART_ID))
+        if(uart_is_readable(UART_ID)) // vérifie que l'UART a fini sa phase d'envoi
   { 
     Serial.readBytes(buffer_reception, 8); // lit 8 bits de données envoyés par l'USB et les stock dans le buffer
 
