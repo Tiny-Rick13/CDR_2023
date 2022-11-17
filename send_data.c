@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "C:\COM2\lib\.platformio\packages\framework-arduino-mbed\cores\arduino\Serial.h"
-#include "C:\COM2\lib\.platformio\packages\framework-arduino-mbed\cores\arduino\api\cstdio"
+#include <Serial.h>
+#include <cstdio>
 #include <uart.h>
 #include <stdio_uart.h>
 #include <stdio.h>
@@ -31,7 +31,7 @@ void setup() {
     pinMode(B, OUTPUT);
 }
 
-// Définition des fonctions 
+// Définition des fonctions de contrôle des codeuses 
 
 void stop() {
     digitalWrite(A, LOW);
@@ -48,14 +48,14 @@ void reculer(char a) {
     digitalWrite(B, LOW);
 }
 
-int main() {
+void main() {
     
     while (1) {
         char buffer_reception[DATA_BITS]; //stocke la trame reçue, byte de taille 8 : 255 possibilités
         
         if (uart_is_readable(UART_ID) != 0) {
             
-            uart_read_blocking(UART_ID, buffer_reception, DATA_BITS);
+            uart_read_blocking(UART_ID, buffer_reception, DATA_BITS); //lit la trame de taille DATA_BITS et la stocke dans le buffer
             
             if (buffer_reception[0] == START_BIT) { // Le programme ne fonctionne que si le 1er bit est le bit de départ
                
@@ -65,7 +65,7 @@ int main() {
                    
                     switch(buffer_reception[i]) {
                         case 1 : 
-                            uart_puts( UART_ID, "ORDRE 1");
+                            uart_puts( UART_ID, "ORDRE 1"); // envoie l'ordre au raspberry 4
                             break;
                         case 2 :
                             uart_puts( UART_ID, "ORDRE 2");
