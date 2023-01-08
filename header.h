@@ -3,6 +3,54 @@
 #include "hardware/uart.h"
 #include <stdint.h>
 
+unsigned int concatene16(unsigned int octet1, unsigned int octet2)
+{
+    unsigned int result = (uint16_t)(octet1 << 8)|octet2;
+    return result;
+}
+
+unsigned int concatene32(unsigned int double_octet1, unsigned int double_octet2)
+{
+    unsigned int result = (uint32_t)(double_octet1 << 16)|double_octet2;
+    return result;
+}
+
+int extraire_bit(unsigned long data, int n) {
+ 
+    unsigned int MASK = 0x1;
+    unsigned long bit = (data >> n) & MASK;
+ 
+    return bit;
+}
+
+unsigned int getID(unsigned int octet0) {
+    unsigned int MASK = 0x0f;
+    return (octet0 >> 4) & MASK;
+    
+}
+
+unsigned int getCOMP(unsigned int octet0) {
+    return octet0 & 0x0f;
+}
+
+unsigned int getARG(unsigned int double_octet)
+{
+    return double_octet >> 0;
+}
+
+float getARG_float(unsigned short buffer_reception[])
+{
+    unsigned short id = getID(buffer_reception[0]);
+    unsigned short comp = getCOMP(buffer_reception[0]);
+
+    unsigned short arg0 = (((unsigned short) buffer_reception[1]) << 8) + ((unsigned short) buffer_reception[2]);
+    unsigned short arg1 = (((unsigned short) buffer_reception[3]) << 8) + ((unsigned short) buffer_reception[4]);
+    unsigned int tmp = (((unsigned int) arg0) << 16) + (unsigned int) arg1;
+    float floatArg = *(float*) &tmp;
+
+    return floatArg;
+
+}
 
 void erreur(char ordre[]) {
  char id = getID(ordre[0]);
@@ -81,55 +129,6 @@ void allumer_pompes(char double_octet)
 
         }
     }
-
-}
-
-unsigned int concatene16(unsigned int octet1, unsigned int octet2)
-{
-    unsigned int result = (uint16_t)(octet1 << 8)|octet2;
-    return result;
-}
-
-unsigned int concatene32(unsigned int double_octet1, unsigned int double_octet2)
-{
-    unsigned int result = (uint32_t)(double_octet1 << 16)|double_octet2;
-    return result;
-}
-
-int extraire_bit(unsigned long data, int n) {
- 
-    unsigned int MASK = 0x1;
-    unsigned long bit = (data >> n) & MASK;
- 
-    return bit;
-}
-
-unsigned int getID(unsigned int octet0) {
-    unsigned int MASK = 0x0f;
-    return (octet0 >> 4) & MASK;
-    
-}
-
-unsigned int getCOMP(unsigned int octet0) {
-    return octet0 & 0x0f;
-}
-
-unsigned int getARG(unsigned int double_octet)
-{
-    return double_octet >> 0;
-}
-
-float getARG_float(unsigned short buffer_reception[])
-{
-    unsigned short id = getID(buffer_reception[0]);
-    unsigned short comp = getCOMP(buffer_reception[0]);
-
-    unsigned short arg0 = (((unsigned short) buffer_reception[1]) << 8) + ((unsigned short) buffer_reception[2]);
-    unsigned short arg1 = (((unsigned short) buffer_reception[3]) << 8) + ((unsigned short) buffer_reception[4]);
-    unsigned int tmp = (((unsigned int) arg0) << 16) + (unsigned int) arg1;
-    float floatArg = *(float*) &tmp;
-
-    return floatArg;
 
 }
 
