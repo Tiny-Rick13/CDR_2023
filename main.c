@@ -72,11 +72,11 @@ void main()
 
                         case 1 : //Avancer/Reculer
                             ticks = arg;
-                            if (COMP = 1) 
+                            if (COMP == 1) 
                             { //Avancer
 
                             }
-                            if (COMP = 0) 
+                            if (COMP == 0) 
                             { //Reculer
 
                             }
@@ -84,11 +84,11 @@ void main()
 
                         case 2 : //Tourner
                             ticks = arg;
-                            if (COMP = 1) 
+                            if (COMP == 1) 
                             { //Sens trigo
 
                             }
-                            if (COMP= 0) 
+                            if (COMP == 0) 
                             { //Sens horaire
 
                             }
@@ -129,7 +129,7 @@ void main()
                             {//ne rien faire (traitement apres l'acknowledgement)
 
                             }
-                            if (ID== 8)
+                            if (ID == 8)
                             {//ne rien faire
 
                             }
@@ -148,7 +148,7 @@ void main()
                 if (ID == 7)
                             {//Actionner plusieurs moteurs
                             int nb = COMP; //nbre de moteurs à actionner
-                            allumer_moteurs(double_octet2);                                         //les nb prochaines trames seront allouées aux arguments 
+                            allumer_moteurs(double_octet2); //les nb prochaines trames seront allouées aux arguments 
                             }
        
         }
