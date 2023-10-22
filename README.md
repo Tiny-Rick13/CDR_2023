@@ -1,4 +1,5 @@
 # CDR (Coupe de France de Robotique) 2023
+# French Robotic Competition 2023
 
 - Communication between a Raspberry Pi and a Raspberry Pico using the uart protocole and the pico-sdk:
         - Create protocol packets
